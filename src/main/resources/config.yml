@@ -1,0 +1,39 @@
+mode: "simple"
+storage:
+  use_storage: false
+  storage_method: "file"
+  storage_connection_info: ""
+  storage_connection_flag: ""
+  storage_connection_pool: 10
+permission:
+  use_permission_group: false
+  permission_method: "luckperm"
+economy:
+  use_economy: false
+  economy_method: "yoichigo"
+randomize:
+  use_randomize: true
+  allow_bonus: false
+  random:
+    - default:
+        rate: 500
+    - admin:
+        rate: 1000
+  bonus:
+    - default:
+        rate: 1000
+        income: ""
+    - admin:
+        rate: 1000
+        income: ""
+messages:
+  prefix: "[밤딸기사회보험]"
+  suffix: ""
+  default: "이 문구는 나오면 안됩니다. 이 내용을 관리자에게 직접 알리거나 밤딸기 게시판에 제출해주세요."
+  success: "지급심사 결과, 인벤토리가 보존되었습니다."
+  success_with_bonus: "지급심사 결과, 인벤토리 보존과 함께 보험금이 지급되었습니다."
+  failed: "엄정한 지급심사 결과, 인벤토리가 보존되지 않았습니다."
+  failed_not_target: "보험 적용 대상이 아닙니다. 보험에 가입해주세요."
+  error: "보험 약관상 결함이 있습니다. 이 내용을 관리자에게 직접 알리거나 밤딸기 게시판에 제출해주세요."
+debug: true
+config_version: "v1" # do not edit

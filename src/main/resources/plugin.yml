@@ -1,0 +1,7 @@
+version: "0.1-SNAPSHOT"
+api-version: "1.15"
+name: "beeresicher"
+main: "net.nachtbeere.minecraft.beeresicher.Beeresicher"
+description: "An Insurance system"
+author: "Mirai Kim(github: noxowl)"
+website: "https://github.com/Nachtbeere/Beeresicher"
