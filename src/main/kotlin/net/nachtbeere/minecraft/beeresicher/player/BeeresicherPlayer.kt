@@ -1,5 +1,6 @@
 package net.nachtbeere.minecraft.beeresicher.player
 
+import net.nachtbeere.minecraft.beeresicher.logic.BeeresicherVitaChamberManufactureCode
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.time.OffsetDateTime
@@ -7,13 +8,13 @@ import java.time.OffsetDateTime
 class BeeresicherPlayer(currentInventory: MutableList<ItemStack>,
                         currentArmors: MutableList<ItemStack>,
                         currentExp: Int,
-                        manufactureCode: Int) {
+                        manufactureCode: BeeresicherVitaChamberManufactureCode) {
     private val actualInventory = currentInventory
     private val actualArmors = currentArmors
     private val actualExp = currentExp
     val inventory: List<ItemStack> = actualInventory
     val armors: List<ItemStack> = actualArmors
-    val manufactureCode: Int = manufactureCode
+    val manufactureCode = manufactureCode
     val createdAt: OffsetDateTime = OffsetDateTime.now()
 
     fun updateInventory(item: ItemStack) {
@@ -21,7 +22,11 @@ class BeeresicherPlayer(currentInventory: MutableList<ItemStack>,
     }
 
     fun isSucceed(): Boolean {
-        return this.manufactureCode < 30
+        return when (this.manufactureCode) {
+            BeeresicherVitaChamberManufactureCode.SUCCESS -> true
+            BeeresicherVitaChamberManufactureCode.SUCCESS_WITH_BONUS -> true
+            else -> false
+        }
     }
 
     fun migration(player: Player) {

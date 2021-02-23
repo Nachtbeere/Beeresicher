@@ -4,7 +4,7 @@ import net.nachtbeere.minecraft.beeresicher.logic.BeeresicherVitaChamberManufact
 import org.bukkit.configuration.MemorySection
 
 class BeeresicherMessages(rawMessages: MemorySection) {
-    val messageCollection: HashMap<Int, String> = HashMap<Int, String>()
+    val messageCollection: HashMap<BeeresicherVitaChamberManufactureCode, String> = hashMapOf()
     private var messagePrefix = ""
     private var messageSuffix = ""
 
@@ -19,7 +19,7 @@ class BeeresicherMessages(rawMessages: MemorySection) {
         messageCollection[BeeresicherVitaChamberManufactureCode.ERROR] = rawMessages.getString("error")!!
     }
 
-    fun message(code: Int): String {
+    fun message(code: BeeresicherVitaChamberManufactureCode): String {
         return "${messagePrefix} ${messageCollection[code]!!} ${messageSuffix}"
     }
 }
