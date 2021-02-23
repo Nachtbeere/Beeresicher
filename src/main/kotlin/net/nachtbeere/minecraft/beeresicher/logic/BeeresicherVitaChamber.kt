@@ -24,7 +24,7 @@ abstract class BeeresicherVitaChamber(
     private val randomizer: BeeresicherRandomizer,
     private val playerMetadata: BeeresicherPlayerMetadata
 ) {
-    var manufactureCode = 0
+    var manufactureCode: BeeresicherVitaChamberManufactureCode = BeeresicherVitaChamberManufactureCode.DEFAULT
 
     fun isRecoverable(): Boolean {
         if (randomizer.config.useRandomize) {
@@ -42,10 +42,19 @@ abstract class BeeresicherVitaChamber(
 
     fun manufactureClone(): BeeresicherPlayer {
         return BeeresicherPlayer(
-            currentInventory = player.inventory.contents.toMutableList() ,
-            currentArmors = player.inventory.armorContents.toMutableList(),
+            currentInventory = this.player.inventory.contents.toMutableList() ,
+            currentArmors = this.player.inventory.armorContents.toMutableList(),
             currentExp = 0, // write later
-            manufactureCode = manufactureCode
+            manufactureCode = this.manufactureCode
+        )
+    }
+
+    fun emptyClone(): BeeresicherPlayer {
+        return BeeresicherPlayer(
+            currentInventory = emptyList<ItemStack>() as MutableList<ItemStack>,
+            currentArmors = emptyList<ItemStack>() as MutableList<ItemStack>,
+            currentExp = 0, // write later
+            manufactureCode = this.manufactureCode
         )
     }
 
@@ -65,8 +74,13 @@ class BeeresicherSimpleVitaChamber(player: Player, randomizer: BeeresicherRandom
     }
 
     override fun makeClone(): BeeresicherPlayer {
-        preExecute()
-        return manufactureClone()
+        return try {
+            preExecute()
+            manufactureClone()
+        } catch (ex: Exception) {
+            this.manufactureCode = BeeresicherVitaChamberManufactureCode.ERROR
+            emptyClone()
+        }
     }
 }
 
@@ -89,13 +103,8 @@ class BeeresicherAdvancedVitaChamber(player: Player, randomizer: BeeresicherRand
             preExecute()
             manufactureClone()
         } catch (ex: Exception) {
-            this.manufactureCode = 50
-            BeeresicherPlayer(
-                currentInventory = emptyList<ItemStack>() as MutableList<ItemStack>,
-                currentArmors = emptyList<ItemStack>() as MutableList<ItemStack>,
-                currentExp = 0, // write later
-                manufactureCode = manufactureCode
-            )
+            this.manufactureCode = BeeresicherVitaChamberManufactureCode.ERROR
+            emptyClone()
         }
     }
 }

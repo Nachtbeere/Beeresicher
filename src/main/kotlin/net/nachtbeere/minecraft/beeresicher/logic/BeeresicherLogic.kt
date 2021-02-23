@@ -29,7 +29,7 @@ class BeeresicherLogic(instance: Beeresicher) {
     }
 
     fun onRespawn(event: PlayerRespawnEvent) {
-        val clone = registry.fetch(event.player.uniqueId)
+        val clone = registry.pop(event.player.uniqueId)
         if (clone != null) {
             if (config.debug) {
                 plugin.logger.info("initiate clone migrate")
@@ -39,7 +39,9 @@ class BeeresicherLogic(instance: Beeresicher) {
             }
             event.player.sendMessage(config.messages.message(clone.manufactureCode))
         } else {
-            event.player.sendMessage(config.messages.message(BeeresicherVitaChamberManufactureCode.DEFAULT))
+            if (config.debug) {
+                plugin.logger.info("onRespawn call from non-death event")
+            }
         }
     }
 }
